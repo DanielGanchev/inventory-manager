@@ -18,6 +18,8 @@ import org.shop.inventorymanager.models.enums.RoleEnum;
 @Builder
 public class Role extends BaseEntity{
 
+
+
   @Enumerated(EnumType.STRING)
   private RoleEnum name;
 

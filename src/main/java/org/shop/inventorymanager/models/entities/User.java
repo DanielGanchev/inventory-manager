@@ -68,7 +68,7 @@ public class User extends BaseEntity {
   private Set<Role> roles = new HashSet<>();
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  private Inventory inventory;
+  private Inventory inventory = new Inventory();
 
 
 }

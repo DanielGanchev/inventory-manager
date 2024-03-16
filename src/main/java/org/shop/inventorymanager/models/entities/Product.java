@@ -1,22 +1,17 @@
 package org.shop.inventorymanager.models.entities;
 
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
-
-import java.util.HashSet;
-import java.util.Set;
-import lombok.*;
-
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,20 +23,15 @@ import lombok.*;
 @Table(name = "products")
 public class Product extends BaseEntity{
 
-  @Column(nullable = false)
-  private String name;
-
-  @Column(length = 500)
-  private String description;
-
-  @Column(nullable = false)
-  private BigDecimal price;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "inventory_id")
+  private Inventory inventory;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "category_id")
-  private Category category;
+  @JoinColumn(name = "product_info_id")
+  private ProductInfo productInfo;
 
-  @ManyToMany(mappedBy = "products")
-  private Set<Inventory> inventories = new HashSet<>();
+  private int quantityInStock = 0;
+  private int quantitySold = 0;
 
 }
