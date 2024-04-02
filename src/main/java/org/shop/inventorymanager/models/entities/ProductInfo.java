@@ -38,9 +38,6 @@ public class ProductInfo extends BaseEntity{
   @Column(nullable = false,precision = 10, scale = 2)
   private BigDecimal price;
 
-  @Column(nullable = false, unique = true,length = 13)
-  private String barcode;
-
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")

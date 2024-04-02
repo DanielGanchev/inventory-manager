@@ -1,5 +1,6 @@
 package org.shop.inventorymanager.service.impl;
 
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.shop.inventorymanager.models.entities.Inventory;
 import org.shop.inventorymanager.models.entities.Product;
@@ -24,6 +25,7 @@ public class InventoryServiceImpl implements InventoryService {
   private final InventoryRepository inventoryRepository;
 
 
+  //Add Product Wrapper to inventory
   public boolean addProductToInventory(Long productId, Long inventoryId) {
     ProductInfo productInfo = productInfoRepository.findById(productId).orElseThrow();
     Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow();
@@ -43,18 +45,42 @@ public class InventoryServiceImpl implements InventoryService {
     return true;
   }
 
+
+
+  //Remove Product Wrapper from inventory
   @Transactional
   public void removeProductFromInventory(Long userId, Long productId) {
     Product product = productRepository.findById(productId).orElseThrow();
 
-    User user = userRepository.findById(userId).orElseThrow();
 
-    if (user.getInventory().getProducts().stream().anyMatch(p -> p.getId().equals(productId))) {
+
+    boolean productExists = getInventoryProductsByUserId(userId).stream()
+        .anyMatch(product1 -> product1.getId().equals(productId));
+
+    if (!productExists) {
       throw new IllegalArgumentException("User does not have this product in inventory");
     }
 
     productRepository.delete(product);
-
   }
+
+  //Get all products in inventory by inventory id
+  public Set<Product> getInventoryProducts(Long inventoryId) {
+    Inventory inventory = inventoryRepository.findById(inventoryId).orElseThrow();
+
+    return inventory.getProducts();
+  }
+
+  //Get all products in inventory by user id
+  public Set<Product> getInventoryProductsByUserId(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow();
+
+    return user.getInventory().getProducts();
+  }
+
+
+
+
+
 }
 

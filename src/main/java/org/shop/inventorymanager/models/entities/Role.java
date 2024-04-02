@@ -16,8 +16,7 @@ import org.shop.inventorymanager.models.enums.RoleEnum;
 @Setter
 @Entity
 @Builder
-public class Role extends BaseEntity{
-
+public class Role extends BaseEntity {
 
 
   @Enumerated(EnumType.STRING)

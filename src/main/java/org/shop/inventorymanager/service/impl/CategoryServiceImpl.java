@@ -17,6 +17,7 @@ public class CategoryServiceImpl implements  CategoryService {
     this.categoryRepository = categoryRepository;
   }
 
+  //Get all products by category
   public Set<ProductInfo> getProductInfoByCategory(String category) {
     Category categoryEntity = categoryRepository.findByName(category).orElseThrow();
 
