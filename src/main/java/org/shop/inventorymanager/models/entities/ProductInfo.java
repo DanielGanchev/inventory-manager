@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 
 
 @AllArgsConstructor
@@ -29,14 +29,17 @@ import lombok.*;
 @Table(name = "product_info")
 public class ProductInfo extends BaseEntity{
 
-  @Column(nullable = false)
+  @Column(nullable = false,unique = true,length = 100)
   private String name;
 
   @Column(length = 500)
   private String description;
 
-  @Column(nullable = false)
+  @Column(nullable = false,precision = 10, scale = 2)
   private BigDecimal price;
+
+  @Column(nullable = false, unique = true,length = 13)
+  private String barcode;
 
 
   @ManyToOne(fetch = FetchType.LAZY)

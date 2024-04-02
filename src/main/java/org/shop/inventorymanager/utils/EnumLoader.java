@@ -31,7 +31,7 @@ public class EnumLoader implements CommandLineRunner {
     if (categoryRepository.count() == 0) {
       for (CategoryEnum categoryEnum : CategoryEnum.values()) {
         Category category = new Category();
-        category.setName(categoryEnum.name());
+        category.setName(categoryEnum);
         categoryRepository.save(category);
       }
     }
