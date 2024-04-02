@@ -47,14 +47,13 @@ public class InventoryServiceImpl implements InventoryService {
   public void removeProductFromInventory(Long userId, Long productId) {
     Product product = productRepository.findById(productId).orElseThrow();
 
+    User user = userRepository.findById(userId).orElseThrow();
 
-  User user = userRepository.findById(userId).orElseThrow();
+    if (user.getInventory().getProducts().stream().anyMatch(p -> p.getId().equals(productId))) {
+      throw new IllegalArgumentException("User does not have this product in inventory");
+    }
 
-  if(user.getInventory().getProducts().stream().anyMatch(p -> p.getId().equals(productId))) {
-    throw new IllegalArgumentException("User does not have this product in inventory");
-  }
-
-  productRepository.delete(product);
+    productRepository.delete(product);
 
   }
 }
